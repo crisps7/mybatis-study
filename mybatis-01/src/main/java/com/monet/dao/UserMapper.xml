@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<!--namespace绑定一个对应的dao/mapper接口-->
+<mapper namespace="com.monet.dao.UserMapper">
+
+    <select id="getUserLike" resultType="com.monet.pojo.User">
+        select * from mybatis.user where name like "%" #{value} "%";
+    </select>
+
+
+    <!--select查询语句-->
+    <select id="getUserList" resultType="com.monet.pojo.User">
+        select * from mybatis.user;
+    </select>
+
+    
+    <select id="getUserById" parameterType="int" resultType="com.monet.pojo.User">
+        select * from mybatis.user where id=${id};
+    </select>
+
+
+    <select id="getUserById2" parameterType="map" resultType="com.monet.pojo.User">
+        select * from mybatis.user where id=#{helloid} and name=#{name};
+    </select>
+
+
+    <!--对象中的属性，可以直接取出来
+    传递Map的key
+    -->
+    <insert id="addUser" parameterType="com.monet.pojo.User" >
+        insert into mybatis.user (id,name,pwd) values (#{id},#{name},#{pwd});
+    </insert>
+
+
+    <!--当实体类或数据库中的表,字段或参数过多时，考虑使用Map-->
+    <insert id="addUser2" parameterType="map">
+        insert into mybatis.user (id,name,pwd) values (#{userid},#{userName},#{password});
+    </insert>
+
+
+    <update id="updateUser" parameterType="com.monet.pojo.User">
+        update mybatis.user set name=#{name},pwd=#{pwd}  where id=#{id};
+    </update>
+
+
+    <delete id="deleteUser" parameterType="com.monet.pojo.User">
+        delete from mybatis.user where id=#{id};
+    </delete>
+</mapper>
